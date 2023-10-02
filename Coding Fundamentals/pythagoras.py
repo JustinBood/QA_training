@@ -7,19 +7,19 @@ while True:
         break
 
 if selection == "1":
-    b = int(input("Enter length of side B: "))
-    c = int(input("Enter length of side C: "))
+    b = float(input("Enter length of side B: "))
+    c = float(input("Enter length of side C: "))
     a = ((c**2)-(b**2)) ** 0.5
     print(a)
 
 if selection == "2":
-    a = int(input("Enter length of side A: "))
-    c = int(input("Enter length of side C: "))
+    a = float(input("Enter length of side A: "))
+    c = float(input("Enter length of side C: "))
     b = ((c**2)-(a**2)) ** 0.5
     print(b)
 
 if selection == "3":
-    a = int(input("Enter length of side A: "))
-    b = int(input("Enter length of side C: "))
+    a = float(input("Enter length of side A: "))
+    b = float(input("Enter length of side C: "))
     c = ((a**2)+(b**2)) ** 0.5
     print(c)
