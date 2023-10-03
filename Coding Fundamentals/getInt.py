@@ -8,10 +8,11 @@ while t:
     if num >min and num < max:
         print(num)
         break
+    elif count == 2:
+        print(None)
+        t= False
     else:
         print("Wrong try again")
         count +=1
     
-    if count == 3:
-        print(None)
-        t= False
+ 
