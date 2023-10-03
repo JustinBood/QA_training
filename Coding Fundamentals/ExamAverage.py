@@ -19,9 +19,9 @@ while True:
     else:
         print("Please enter your proper grade.")
 
-average = score1 + score2 + score3
+average = (score1 + score2 + score3) / 3
 
 if average >= 65:
-    print("Well done, you passed")
+    print("Well done, you passed. Your average was", average)
 else:
-    print("You failed")
+    print("You failed. Your average was", average)
