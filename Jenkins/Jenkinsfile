@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                // Replace with your build steps.
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Replace with your test steps.
+                echo 'Testing...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Replace with your deployment steps.
+                echo 'Deploying...'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'Job succeeded!'
+        }
+        failure {
+            echo 'Job failed!'
+        }
+    }
+}
