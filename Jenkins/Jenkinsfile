@@ -1,25 +1,26 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                // Replace with your build steps.
-                echo 'Building...'
-            }
-        }
-
+    environment {
+        DOCKER_LOGIN=credentials('DOCKER_LOGIN')
+    }
+    stages{
         stage('Test') {
             steps {
-                // Replace with your test steps.
-                echo 'Testing...'
+                sh 'echo "Running tests..."'
             }
         }
-
+        stage('Build') {
+            steps {
+                sh 'docker build -t jusinbood/jenkinsapp .'
+                sh 'docker login -u ${DOCKER_LOGIN_USR} -p ${DOCKER_LOGIN_PSW}'
+                sh 'docker push jusinbood/jenkinsapp'
+                
+            }
+        }
         stage('Deploy') {
             steps {
-                // Replace with your deployment steps.
-                echo 'Deploying...'
+                sh 'docker run -d -p 5000:5000 --name app1 jusinbood/jenkinsapp'
+                
             }
         }
     }
