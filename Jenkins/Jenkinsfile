@@ -13,10 +13,10 @@ pipeline {
             steps {
                // sh 'docker stop jenkinsapp'
                // sh 'docker rm jenkinsapp'
-                sh 'docker build -t justinbood/jenkinsapp .'
+                sh 'sudo docker build -t justinbood/jenkinsapp .'
                // sh 'docker login -u ${DOCKER_LOGIN_USR} -p ${DOCKER_LOGIN_PSW}'
                 //sh 'docker push justinbood/jenkinsapp'
-                sh 'docker run -d -p 5000:5000 --name jenkinsapp justinbood/jenkinsapp'
+                sh 'sudo docker run -d -p 5000:5000 --name jenkinsapp justinbood/jenkinsapp'
                 
             }
         }
