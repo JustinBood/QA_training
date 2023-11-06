@@ -24,16 +24,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            echo 'This will always run'
-        }
-        success {
-            echo 'Job succeeded!'
-        }
-        failure {
-            echo 'Job failed!'
-        }
-    }
 }
