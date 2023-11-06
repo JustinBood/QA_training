@@ -11,15 +11,15 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t jusinbood/jenkinsapp .'
+                sh 'docker build -t justinbood/jenkinsapp .'
                 sh 'docker login -u ${DOCKER_LOGIN_USR} -p ${DOCKER_LOGIN_PSW}'
-                sh 'docker push jusinbood/jenkinsapp'
+                sh 'docker push justinbood/jenkinsapp'
                 
             }
         }
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5000:5000 --name app1 jusinbood/jenkinsapp'
+                sh 'docker run -d -p 5000:5000 --name app1 justinbood/jenkinsapp'
                 
             }
         }
