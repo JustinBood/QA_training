@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    environment {
+    //environment {
         //DOCKER_LOGIN=credentials('DOCKER_LOGIN')
-    }
+    //}
     stages{
         stage('Test') {
             steps {
