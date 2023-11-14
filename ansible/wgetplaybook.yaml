@@ -1,0 +1,14 @@
+- name: Common Setup for All Hosts
+  hosts: all
+  become: yes
+  
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install wget
+      apt:
+        name: wget
+        state: present

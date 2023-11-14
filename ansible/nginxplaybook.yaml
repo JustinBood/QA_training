@@ -1,0 +1,19 @@
+- name: Install and Start NGINX
+  hosts: host1
+  become: yes  # This is important for privilege escalation to install packages
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: latest  # Ensures the latest version of NGINX is installed
+
+    - name: Ensure NGINX is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes  # Ensures NGINX is enabled to start on boot
