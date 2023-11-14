@@ -1,0 +1,17 @@
+- name: Replace NGINX default HTML file on EC2 instance
+  hosts: host1
+  vars:
+    local_html_path: "./index.html"
+    remote_html_path: "/usr/share/nginx/html/index.html"  # Update this path based on your NGINX setup
+  tasks:
+    - name: Transfer new HTML file to EC2 instance
+      copy:
+        src: "{{ local_html_path }}"
+        dest: "{{ remote_html_path }}"
+      become: yes  # Use 'become' for administrative privileges
+
+    - name: Reload NGINX to apply changes
+      ansible.builtin.systemd:
+        name: nginx
+        state: reloaded
+      become: yes  # Use 'become' for administrative privileges
