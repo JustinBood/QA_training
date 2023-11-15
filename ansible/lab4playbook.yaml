@@ -1,0 +1,53 @@
+---
+- name: Lab 4 Playbook
+  hosts: host1
+  vars_prompt:
+    - name: user_name
+      prompt: "Justin"
+      private: no
+    - name: repo_url
+      prompt: "https://github.com/JustinBood/QA_training.git"
+      private: no
+    - name: package_name
+      prompt: "unzip"
+      private: no
+      default: unzip
+    - name: file_text
+      prompt: "This is a new file I created using ansible"
+      private: no
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Print user name
+      debug:
+        msg: "Hello, {{ user_name }}"
+
+    - name: Clone repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "home/ubuntu/repo/"
+
+    - name: Install specified package
+      package:
+        name: "{{ package_name }}"
+        state: present
+
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+      notify: restart nginx
+
+    - name: Create a file and append text
+      copy:
+        dest: "home/ubuntu/file.txt"
+        content: "{{ file_text }}"
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
