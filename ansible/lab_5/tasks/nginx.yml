@@ -1,0 +1,18 @@
+
+- name: Install Nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Deploy custom HTML page
+  ansible.builtin.template:
+    src: custom.html.j2
+    dest: /var/www/html/custom.html
+
+- name: Update Nginx configuration to serve custom page
+  ansible.builtin.lineinfile:
+    path: /etc/nginx/sites-available/default
+    regexp: '^\s+root'
+    line: '        root /var/www/html;'
+    state: present
+  notify: restart nginx
