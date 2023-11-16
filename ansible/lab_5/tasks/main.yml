@@ -1,0 +1,27 @@
+- name: Create 'Devs' group
+  ansible.builtin.group:
+    name: Devs
+    state: present
+
+- name: Create a user with your name
+  ansible.builtin.user:
+    name: Justin
+    group: Devs
+    shell: /bin/zsh
+    create_home: yes
+
+- name: Install zsh and curl
+  ansible.builtin.package:
+    name: 
+      - zsh
+      - curl
+    state: present
+
+- name: Install Docker
+  include_tasks: docker.yml
+
+- name: INstall Jenkins
+  include_tasks: jenkins.yml
+
+- name: Install and Configure Nginx
+  include_tasks: nginx.yml

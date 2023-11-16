@@ -1,0 +1,30 @@
+- name: Install Docker prerequisites
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Add Docker’s official GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Set up the Docker repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker Engine
+  ansible.builtin.apt:
+    update_cache: yes
+    name: docker-ce
+    state: latest
