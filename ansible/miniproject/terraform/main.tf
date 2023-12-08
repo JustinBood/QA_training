@@ -1,7 +1,7 @@
 provider "aws" {
- access_key   = var.access_key
- secret_key   = var.secret_key
- region       = "eu-west-2"
+  access_key   = var.access_key
+  secret_key   = var.secret_key
+  region       = "eu-west-2"
 }
 
 resource "aws_vpc" "example_vpc" {
@@ -13,6 +13,8 @@ resource "aws_vpc" "example_vpc" {
     Name = "example-vpc"
   }
 }
+
+###################################################### Subnets + internet gateway ######################################################
 
 resource "aws_subnet" "example_subnet_1" {
   vpc_id     = aws_vpc.example_vpc.id
@@ -48,7 +50,8 @@ resource "aws_internet_gateway" "example_igw" {
     Name = "example-igw"
   }
 }
- 
+
+###################################################### Round Tables ######################################################
 
 resource "aws_route_table" "example_rt" {
   vpc_id = aws_vpc.example_vpc.id
@@ -78,7 +81,9 @@ resource "aws_route_table_association" "example_rta_3" {
   route_table_id = aws_route_table.example_rt.id
 }
 
-resource "aws_security_group" "my_sg" {
+###################################################### SG with ports open for SSH, HTTP, JENKINS and MYSQL ######################################################
+
+resource "aws_security_group" "my_sg" {                        
   vpc_id = aws_vpc.example_vpc.id
   name        = "my_sg"
   description = "Security group for everything"
@@ -124,6 +129,8 @@ resource "aws_security_group" "my_sg" {
   }
 }
 
+###################################################### MySQL database ######################################################
+
 resource "aws_db_instance" "mysql_db" {
   allocated_storage    = 20
   storage_type         = "gp2"
@@ -152,8 +159,9 @@ resource "aws_db_subnet_group" "example_subnet_group" {
   }
 }
 
+###################################################### EC2S ######################################################
 
-resource "aws_instance" "CI_server_ec2" {
+resource "aws_instance" "Control_ec2" {
  ami              = var.ami
  instance_type    = "t2.micro"
  key_name         = "mykey"
@@ -161,6 +169,30 @@ resource "aws_instance" "CI_server_ec2" {
  security_groups  = [aws_security_group.my_sg.id]
 
  tags = {
-  Name = "demo1"
+  Name = "Control_ec2"
+ }
+}
+
+resource "aws_instance" "CI_ec2" {
+ ami              = var.ami
+ instance_type    = "t2.micro"
+ key_name         = "mykey"
+ subnet_id        = aws_subnet.example_subnet.id
+ security_groups  = [aws_security_group.my_sg.id]
+
+ tags = {
+  Name = "CI_ec2"
+ }
+}
+
+resource "aws_instance" "Deploy_ec2" {
+ ami              = var.ami
+ instance_type    = "t2.micro"
+ key_name         = "mykey"
+ subnet_id        = aws_subnet.example_subnet.id
+ security_groups  = [aws_security_group.my_sg.id]
+
+ tags = {
+  Name = "Deploy_ec2"
  }
 }
